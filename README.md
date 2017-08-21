@@ -28,11 +28,37 @@ app.build 导入依赖
 
 ## 使用
 
+常规使用：
+
 ```java
         WebViewDialog dialog = new WebViewDialog(this);
         dialog.loadUrl(url);
         dialog.show();
 ```
+
+如果弹窗是由系统自动完成，而不是用户点击，建议在页面加载完成的时候再弹出：
+```java
+        url = etUrl.getText().toString().trim();
+        final WebViewDialog dialog = new WebViewDialog(this);
+        dialog.loadUrl(url);
+        dialog.getWebView().startCallback(new WebViewCallback() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onProgress(int curProgress) {
+                if (curProgress == 100) {//加载完成的时候再显示
+                    dialog.show();
+                }
+            }
+
+            @Override
+            public void onError(int errorCode, String description, String failingUrl) {
+            }
+        });
+```
+
 
 ## h5关闭对话框
 

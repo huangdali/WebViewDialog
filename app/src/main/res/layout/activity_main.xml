@@ -6,11 +6,30 @@
     android:layout_height="match_parent"
     tools:context="com.hdl.webviewdialogdemo.MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onDialog"
-        android:text="弹出" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_url"
+            android:text="http://39.108.193.125:8080/vas/pages/prompt/"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:lines="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDialog"
+            android:text="弹出" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
