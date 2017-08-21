@@ -75,6 +75,15 @@ public class WebViewDialog extends Dialog {
     }
 
     /**
+     * 获取webview
+     *
+     * @return
+     */
+    public CommWebView getWebView() {
+        return webView;
+    }
+
+    /**
      * 设置边距
      *
      * @param left_right
