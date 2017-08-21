@@ -3,6 +3,11 @@
 - 显示webview的dialog
 - 背景透明
 
+## 效果图
+
+![](https://github.com/huangdali/WebViewDialog/blob/master/screenshot.png)
+
+
 ## 导入
 app.build 导入依赖
 ```java
