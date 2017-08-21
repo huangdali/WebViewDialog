@@ -1,5 +1,6 @@
 package com.hdl.webviewdialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -42,15 +43,25 @@ public class WebViewDialog extends Dialog {
     private void init() {
 //        View view = View.inflate(mContext, R.layout.dialog_webview, null);
 //        webView = (CommWebView) view.findViewById(R.id.cwv_view);
-        webView =new CommWebView(mContext);
+        webView = new CommWebView(mContext);
         webView.setTransparent(true);
         webView.addJavascriptInterface(new JSCallNative(), "JsCallNative");
         setContentView(webView);
         setMargin();
     }
 
-    public void setOnDialogListener(OnDialogListener onDialogListener) {
-        this.onDialogListener = onDialogListener;
+    /**
+     * 添加js与java互相调用类.
+     * <p>
+     * SuppressLint("JavascriptInterface") 表示webview的修复漏洞
+     *
+     * @param mapClazz js方法与java方法映射类
+     * @param objName  对象的名字
+     */
+    @SuppressLint("JavascriptInterface")
+    public WebViewDialog addJavascriptInterface(Object mapClazz, String objName) {
+        webView.addJavascriptInterface(mapClazz, objName);
+        return this;
     }
 
     /**
