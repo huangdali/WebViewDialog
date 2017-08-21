@@ -44,7 +44,7 @@ public class WebViewDialog extends Dialog {
 //        webView = (CommWebView) view.findViewById(R.id.cwv_view);
         webView =new CommWebView(mContext);
         webView.setTransparent(true);
-        webView.addJavascriptInterface(JSCallNative.class, "JsCallNative");
+        webView.addJavascriptInterface(new JSCallNative(), "JsCallNative");
         setContentView(webView);
         setMargin();
     }
