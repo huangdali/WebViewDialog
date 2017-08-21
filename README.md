@@ -41,7 +41,7 @@ app.build 导入依赖
 - 方法名：closeDialog
 
 **eg:**
-在需要关闭对话框按钮加入以下代码
+在需要关闭对话框的地方加入以下代码
 ```java
    onClick="window.JsCallNative.closeDialog()"
 ```
