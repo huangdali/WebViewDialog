@@ -11,7 +11,7 @@
 ## 导入
 app.build 导入依赖
 ```java
-    compile 'com.jwkj:WebViewDialog:v1.0.5'
+    compile 'com.jwkj:WebViewDialog:v1.0.6'
     compile 'com.jwkj:commwebview:v1.0.8'
 ```
 
@@ -75,6 +75,9 @@ app.build 导入依赖
 
 
 ## 版本记录
+
+v1.0.6 ( [2017.08.25]() )
+- 【新增】设置是否显示dialog的出现动画
 
 v1.0.5 ( [2017.08.21]() )
 - 【新增】getWebView方法，可自己扩展配置webview

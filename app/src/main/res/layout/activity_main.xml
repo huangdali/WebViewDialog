@@ -14,7 +14,7 @@
 
         <EditText
             android:id="@+id/et_url"
-            android:text="http://39.108.193.125:8080/vas/pages/prompt/"
+            android:text="http://39.108.193.125:8080/vas/pages/dialogs/"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"

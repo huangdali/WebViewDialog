@@ -9,7 +9,7 @@ import com.hdl.webviewdialog.WebViewDialog;
 import com.jwkj.WebViewCallback;
 
 public class MainActivity extends AppCompatActivity {
-    private String url = "http://39.108.193.125:8080/vas/pages/prompt/";
+    private String url = "http://39.108.193.125:8080/vas/pages/dialogs/";
     private EditText etUrl;
 
     @Override
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         url = etUrl.getText().toString().trim();
         final WebViewDialog dialog = new WebViewDialog(this);
         dialog.loadUrl(url);
+        dialog.setPlayAnimate(false);
         dialog.getWebView().startCallback(new WebViewCallback() {
             @Override
             public void onStart() {

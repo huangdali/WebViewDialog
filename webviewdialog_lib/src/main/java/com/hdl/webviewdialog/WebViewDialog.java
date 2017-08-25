@@ -8,12 +8,16 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 
 import com.jwkj.CommWebView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 弹窗版webview
@@ -27,6 +31,10 @@ public class WebViewDialog extends Dialog {
     private int margin_left_right_dp = 30;
     private int margin_top_bottom_dp = 65;
     private OnDialogListener onDialogListener;
+    /**
+     * 时候播放动画
+     */
+    private boolean isPlayAnimate=true;
 
     public WebViewDialog(@NonNull Context context) {
         this(context, R.style.Red_Dialog);
@@ -37,7 +45,6 @@ public class WebViewDialog extends Dialog {
         this.mContext = context;
         initPix();
         init();
-        startAnimate();
     }
 
     private void init() {
@@ -46,8 +53,17 @@ public class WebViewDialog extends Dialog {
         webView = new CommWebView(mContext);
         webView.setTransparent(true);
         webView.addJavascriptInterface(new JSCallNative(), "JsCallNative");
+        webView.addJavascriptInterface(new JSCallNative(), "nativeObj");
         setContentView(webView);
         setMargin();
+    }
+
+    public boolean isPlayAnimate() {
+        return isPlayAnimate;
+    }
+
+    public void setPlayAnimate(boolean playAnimate) {
+        isPlayAnimate = playAnimate;
     }
 
     /**
@@ -113,6 +129,14 @@ public class WebViewDialog extends Dialog {
         lp.height = screenHeight - 2 * dip2px(margin_top_bottom_dp); // 高度
     }
 
+    @Override
+    public void show() {
+        super.show();
+        if (isPlayAnimate) {
+            startAnimate();
+        }
+    }
+
     private void startAnimate() {
         getWindow().setWindowAnimations(R.style.Red_Dialog);
     }
@@ -162,6 +186,32 @@ public class WebViewDialog extends Dialog {
                         dismiss();
                     }
                 });
+            }
+        }
+
+        @JavascriptInterface
+        public void postMsg(String data) {
+            Log.e("hdltag", "postMsg(JSCallNative.java:175):" + data);
+            try {
+                JSONObject jsonObject = new JSONObject(data);
+                String mesgType = jsonObject.getString("mesgType");
+                if ("notificationOperation".equals(mesgType)) {
+                    JSONObject mesgContent = jsonObject.getJSONObject("mesgContent");
+                    String option = mesgContent.getString("option");
+                    if ("close".equals(option)) {
+                        /**
+                         * 4.4以上的webview，需要在子线程中调用js与java互相调用的代码
+                         */
+                        ((Activity) mContext).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismiss();
+                            }
+                        });
+                    }
+                }
+            } catch (JSONException e) {
+                Log.e("WebViewDialog","js传给java的数据异常");
             }
         }
     }
