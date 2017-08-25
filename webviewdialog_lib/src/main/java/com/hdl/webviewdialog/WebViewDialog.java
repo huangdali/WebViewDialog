@@ -8,16 +8,12 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 
 import com.jwkj.CommWebView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 弹窗版webview
@@ -53,7 +49,6 @@ public class WebViewDialog extends Dialog {
         webView = new CommWebView(mContext);
         webView.setTransparent(true);
         webView.addJavascriptInterface(new JSCallNative(), "JsCallNative");
-        webView.addJavascriptInterface(new JSCallNative(), "nativeObj");
         setContentView(webView);
         setMargin();
     }
@@ -186,32 +181,6 @@ public class WebViewDialog extends Dialog {
                         dismiss();
                     }
                 });
-            }
-        }
-
-        @JavascriptInterface
-        public void postMsg(String data) {
-            Log.e("hdltag", "postMsg(JSCallNative.java:175):" + data);
-            try {
-                JSONObject jsonObject = new JSONObject(data);
-                String mesgType = jsonObject.getString("mesgType");
-                if ("notificationOperation".equals(mesgType)) {
-                    JSONObject mesgContent = jsonObject.getJSONObject("mesgContent");
-                    String option = mesgContent.getString("option");
-                    if ("close".equals(option)) {
-                        /**
-                         * 4.4以上的webview，需要在子线程中调用js与java互相调用的代码
-                         */
-                        ((Activity) mContext).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dismiss();
-                            }
-                        });
-                    }
-                }
-            } catch (JSONException e) {
-                Log.e("WebViewDialog","js传给java的数据异常");
             }
         }
     }
