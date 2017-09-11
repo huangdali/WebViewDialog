@@ -12,7 +12,7 @@
 app.build 导入依赖
 ```java
     compile 'com.jwkj:WebViewDialog:v1.0.6'
-    compile 'com.jwkj:commwebview:v1.1.3'
+    compile 'com.jwkj:commwebview:v1.1.4'
 ```
 
 ## 配置混淆
